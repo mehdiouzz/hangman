@@ -44,6 +44,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'org.apache.commons:commons-text:1.9'
     implementation 'org.mozilla:rhino:1.7R4'
     implementation 'org.jsoup:jsoup:1.15.2'
     testImplementation 'junit:junit:4.13.2'

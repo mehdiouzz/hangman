@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EasyActivity">
+    tools:context=".OldCodeActivity">
 
     <RelativeLayout
         android:id="@+id/frame"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/sea" >
+        android:background="#FFFFFF" >
 
         <LinearLayout
             android:id="@+id/images"
             android:layout_width="fill_parent"
-            android:layout_height="160dp"
+            android:layout_height="200dp"
             android:layout_gravity="top"
             android:gravity="center"
             android:orientation="horizontal">
@@ -25,6 +25,7 @@
                 android:id="@+id/canvas"
                 android:layout_width="150dp"
                 android:layout_height="fill_parent"
+                android:background="#8C3636"
                 android:gravity="center" />
 
         </LinearLayout>
@@ -33,14 +34,14 @@
             android:id="@+id/input"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:gravity="center"
             android:orientation="vertical"
             android:layout_below="@+id/images" >
 
             <TextView
                 android:id="@+id/radomword"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
+                android:background="#00BCD4"
                 android:gravity="center"
                 android:textColor="#356EDF"
                 android:textSize="34sp"
@@ -78,14 +79,16 @@
                     android:scaleType="fitCenter"
                     android:background="@drawable/my_custom_selector"
                     android:src="@drawable/hint"
-                    android:onClick="displayHint" />
+                    android:onClick="displayHint"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/definition"
                     android:layout_width="wrap_content"
                     android:layout_height="70dp"
+                    android:background="#00D435"
                     android:fontFamily="@font/brawler"
-                    android:textColor="#000000"
+                    android:textColor="#5F76A5"
                     android:layout_marginTop="4dp"
                     android:layout_marginLeft="4dp"
                     android:autoSizeMinTextSize="10sp"
@@ -96,37 +99,17 @@
                     android:visibility="visible" />
 
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/revealsection"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:orientation="vertical"
-                android:layout_below="@+id/hintsection" >
 
-                <TextView
-                    android:id="@+id/counter"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:fontFamily="@font/brawler"
-                    android:gravity="center"
-                    android:textColor="#112142"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:id="@+id/reveal"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:textColor="#2F8A33"
-                    android:textStyle="bold"
-                    android:gravity="left"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/my_custom_selector"
-                    android:src="@drawable/reveal"
-                    android:onClick="revealLetter" />
-
-            </LinearLayout>
-
+            <TextView
+                android:id="@+id/counter"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#D4BF00"
+                android:fontFamily="@font/brawler"
+                android:gravity="center"
+                android:textColor="#112142"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -136,7 +119,8 @@
             android:layout_below="@+id/input"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:background="#9F5858">
 
             <Button
                 android:id="@+id/q"
@@ -144,8 +128,7 @@
                 android:layout_height="45dp"
                 android:layout_marginRight="10dp"
                 android:text="Q"
-                tools:context=".EasyActivity"
-                android:background="@drawable/button_design"
+                tools:context=".MainActivity"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <Button
@@ -154,8 +137,7 @@
                 android:layout_height="45dp"
                 android:layout_marginRight="10dp"
                 android:text="W"
-                tools:context=".EasyActivity"
-                android:background="@drawable/button_design"
+                tools:context=".MainActivity"
                 tools:ignore="TouchTargetSizeCheck" />
 
             <Button
@@ -164,7 +146,7 @@
                 android:layout_height="45dp"
                 android:layout_marginRight="10dp"
                 android:text="E"
-                tools:context=".EasyActivity"
+                tools:context=".MainActivity"
                 tools:ignore="TouchTargetSizeCheck"
                 tools:layout_editor_absoluteX="130dp"
                 tools:layout_editor_absoluteY="393dp" />
@@ -326,7 +308,8 @@
             android:gravity="center"
             android:layout_below="@+id/raw3"
             android:orientation="horizontal"
-            android:weightSum="1" >
+            android:weightSum="1"
+            android:background="#3FA6D8">
 
             <Button
                 android:id="@+id/l"
@@ -369,8 +352,8 @@
             android:layout_below="@+id/raw4"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_marginBottom="20dp"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:background="#7596A6">
 
             <Button
                 android:id="@+id/v"
@@ -410,9 +393,11 @@
             android:id="@+id/footer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_below="@+id/raw5"
-            android:orientation="horizontal">
+            android:background="#009688"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="60dp" >
 
             <!--            <Button-->
             <!--                android:id="@+id/reload"-->
@@ -425,22 +410,22 @@
                 android:id="@+id/reload"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/my_custom_selector"
                 android:gravity="center"
-                android:onClick="reload"
                 android:scaleType="fitCenter"
-                android:src="@drawable/reload" />
-
+                android:background="@drawable/my_custom_selector"
+                android:onClick="reload"
+                android:src="@drawable/reload"
+                />
             <TextView
                 android:id="@+id/tmpword"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
+                android:background="#F1B928"
                 android:gravity="center"
                 android:text="" />
 
         </LinearLayout>
 
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
