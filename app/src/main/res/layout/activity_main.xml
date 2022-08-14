@@ -54,24 +54,43 @@
                 android:orientation="horizontal"
                 android:layout_below="@+id/radomword" >
 
-                <Button
+<!--                <Button-->
+<!--                    android:id="@+id/hint"-->
+<!--                    android:layout_below="@+id/hintsection"-->
+<!--                    android:layout_width="80dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:text="!"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textSize="25dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:gravity="left"-->
+<!--                    android:background="@drawable/hint"-->
+<!--                    android:visibility="visible" />-->
+
+                <ImageButton
                     android:id="@+id/hint"
                     android:layout_below="@+id/hintsection"
                     android:layout_width="40dp"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:text="!"
                     android:textColor="#2F8A33"
-                    android:textSize="25dp"
                     android:textStyle="bold"
                     android:gravity="left"
-                    android:visibility="visible" />
+                    android:scaleType="fitCenter"
+                    android:background="@drawable/my_custom_selector"
+                    android:src="@drawable/hint"
+                    android:onClick="displayHint"
+                    android:visibility="invisible" />
+
                 <TextView
                     android:id="@+id/definition"
                     android:layout_width="wrap_content"
                     android:layout_height="70dp"
                     android:background="#00D435"
                     android:fontFamily="@font/brawler"
-                    android:textColor="#112142"
+                    android:textColor="#5F76A5"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="4dp"
                     android:autoSizeMinTextSize="10sp"
                     android:autoSizeMaxTextSize="15sp"
                     android:maxLines="3"
@@ -380,19 +399,23 @@
             android:orientation="horizontal"
             android:layout_marginTop="60dp" >
 
-            <Button
-                android:id="@+id/reload"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:gravity="center"
-                android:text="Reload" />
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/reloadicon"-->
+<!--            <Button-->
+<!--                android:id="@+id/reload"-->
 <!--                android:layout_width="100dp"-->
 <!--                android:layout_height="80dp"-->
 <!--                android:gravity="center"-->
-<!--                android:src="@drawable/reload" />-->
+<!--                android:text="Reload" />-->
+
+            <ImageButton
+                android:id="@+id/reload"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:background="@drawable/my_custom_selector"
+                android:onClick="reload"
+                android:src="@drawable/reload"
+                 />
             <TextView
                 android:id="@+id/tmpword"
                 android:layout_width="100dp"

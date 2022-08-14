@@ -29,7 +29,8 @@ class MainActivity : AppCompatActivity() ,View.OnClickListener{
     private var randomword: String? = null
     private var definition: String? = null
     private var img :ImageView? = null
-    private var hint: Button? = null
+    private var hint: ImageButton? = null
+    private var reload: ImageButton? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,8 +66,6 @@ class MainActivity : AppCompatActivity() ,View.OnClickListener{
         val n = findViewById<View>(R.id.n) as Button
         val m = findViewById<View>(R.id.m) as Button
 
-        val reload = findViewById<View>(R.id.reload) as Button
-
         q.setOnClickListener(this)
         w.setOnClickListener(this)
         e.setOnClickListener(this)
@@ -94,7 +93,7 @@ class MainActivity : AppCompatActivity() ,View.OnClickListener{
         n.setOnClickListener(this)
         m.setOnClickListener(this)
 
-        reload.setOnClickListener(this)
+//        reload.setOnClickListener(this)
 
 
 //        mTextViewResult = findViewById<View>(R.id.radomword) as TextView
@@ -113,8 +112,8 @@ class MainActivity : AppCompatActivity() ,View.OnClickListener{
         mTextDefinition = findViewById<View>(R.id.definition) as TextView
         mTextCounter = findViewById<View>(R.id.counter) as TextView
         img = findViewById<View>(R.id.canvas) as ImageView
-        hint = findViewById<View>(R.id.hint) as Button
-        hint!!.setOnClickListener(this)
+        hint = findViewById<View>(R.id.hint) as ImageButton
+        reload = findViewById<View>(R.id.reload) as ImageButton
 
         tmpword = findViewById<View>(R.id.tmpword) as TextView
     }
@@ -181,20 +180,22 @@ class MainActivity : AppCompatActivity() ,View.OnClickListener{
 
     override fun onClick(view: View) {
 
+//        if(view.id.toString() == "hint"){
+//            println("#############")
+//            hint()
+//            view.setClickable(false)
+//            return
+//        }
+
         val inp = view as Button
 //       ------ if the reload is clicked -----
-        if (inp.text.toString() == "Reload"){
-//            fetchword()
-            finish()
-            startActivity(getIntent())
-            overridePendingTransition(androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom, androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom);
-            return
-        }
-        if(inp.text == "!"){
-            hint()
-            inp.setClickable(false)
-            return
-        }
+//        if (inp.text.toString() == "Reload"){
+////            fetchword()
+//            finish()
+//            startActivity(getIntent())
+//            overridePendingTransition(androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom, androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom);
+//            return
+//        }
         checkletter(inp.text as String, inp)
         inp.setBackgroundColor(Color.GRAY)
 
@@ -267,9 +268,16 @@ class MainActivity : AppCompatActivity() ,View.OnClickListener{
         mTextDefinition!!.visibility = View.VISIBLE
     }
 
-    private fun hint(){
+     fun displayHint(v : View){
+        var bt = v as ImageButton
+        v.setClickable(false)
         mTextDefinition!!.text = definition
         mTextDefinition!!.visibility = View.VISIBLE
+    }
+    fun reload(v : View){
+        this.finish()
+        this.startActivity(this.getIntent())
+        overridePendingTransition(androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom, androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom);
     }
 }
 
