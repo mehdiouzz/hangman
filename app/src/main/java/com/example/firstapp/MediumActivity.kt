@@ -13,7 +13,7 @@ class MediumActivity : levels(), View.OnClickListener {
 
         url = "https://randomword.com/vocabulary"
 
-        setButtons()
+        loopButtons()
         initgame()
         fetchword()
     }
@@ -26,8 +26,6 @@ class MediumActivity : levels(), View.OnClickListener {
 
     override fun onClick(view: View) {
 
-        println("########### "+view.id.toString())
-//
         val inp = view as Button
 
         checkletter(inp.text as String, inp)

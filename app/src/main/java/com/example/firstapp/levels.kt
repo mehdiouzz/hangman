@@ -1,6 +1,5 @@
 package com.example.firstapp
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
@@ -29,10 +28,14 @@ open class levels : AppCompatActivity(), View.OnClickListener{
     protected var definition: String? = null
     protected var img : ImageView? = null
     protected var hint: ImageButton? = null
+    protected var reveal: ImageButton? = null
     protected var reload: ImageButton? = null
     protected var msg : TextView? = null
 
     protected var lvl : TextView? = null
+    protected var popuplocation : LinearLayout? = null
+    protected var winMsg = "You won" as String
+    protected var lossMsg = "Game Over" as String
 
     protected var q : Button? = null
     protected var w : Button? = null
@@ -63,63 +66,6 @@ open class levels : AppCompatActivity(), View.OnClickListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-        q = findViewById<View>(R.id.q) as? Button
-        w = findViewById<View>(R.id.w) as? Button
-        e = findViewById<View>(R.id.e) as? Button
-        r = findViewById<View>(R.id.r) as? Button
-        t = findViewById<View>(R.id.t) as? Button
-        y = findViewById<View>(R.id.y) as? Button
-        u = findViewById<View>(R.id.u) as? Button
-        i = findViewById<View>(R.id.i) as? Button
-        o = findViewById<View>(R.id.o) as? Button
-        p = findViewById<View>(R.id.p) as? Button
-        a = findViewById<View>(R.id.a) as? Button
-        s = findViewById<View>(R.id.s) as? Button
-        d = findViewById<View>(R.id.d) as? Button
-        f = findViewById<View>(R.id.f) as? Button
-        g = findViewById<View>(R.id.g) as? Button
-        h = findViewById<View>(R.id.h) as? Button
-        j = findViewById<View>(R.id.j) as? Button
-        k = findViewById<View>(R.id.k) as? Button
-        l = findViewById<View>(R.id.l) as? Button
-        z = findViewById<View>(R.id.z) as? Button
-        x = findViewById<View>(R.id.x) as? Button
-        c = findViewById<View>(R.id.c) as? Button
-        v = findViewById<View>(R.id.v) as? Button
-        b = findViewById<View>(R.id.b) as? Button
-        n = findViewById<View>(R.id.n) as? Button
-        m = findViewById<View>(R.id.m) as? Button
-
-
-
-        q?.setOnClickListener(this)
-        w?.setOnClickListener(this)
-        e?.setOnClickListener(this)
-        r?.setOnClickListener(this)
-        t?.setOnClickListener(this)
-        y?.setOnClickListener(this)
-        u?.setOnClickListener(this)
-        i?.setOnClickListener(this)
-        o?.setOnClickListener(this)
-        p?.setOnClickListener(this)
-        a?.setOnClickListener(this)
-        s?.setOnClickListener(this)
-        d?.setOnClickListener(this)
-        f?.setOnClickListener(this)
-        g?.setOnClickListener(this)
-        h?.setOnClickListener(this)
-        j?.setOnClickListener(this)
-        k?.setOnClickListener(this)
-        l?.setOnClickListener(this)
-        z?.setOnClickListener(this)
-        x?.setOnClickListener(this)
-        c?.setOnClickListener(this)
-        v?.setOnClickListener(this)
-        b?.setOnClickListener(this)
-        n?.setOnClickListener(this)
-        m?.setOnClickListener(this)
 
     }
 
@@ -152,33 +98,41 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         val n = findViewById<View>(R.id.n) as? Button
         val m = findViewById<View>(R.id.m) as? Button
 
-        q?.setOnClickListener(this)
-        w?.setOnClickListener(this)
-        e?.setOnClickListener(this)
-        r?.setOnClickListener(this)
-        t?.setOnClickListener(this)
-        y?.setOnClickListener(this)
-        u?.setOnClickListener(this)
-        i?.setOnClickListener(this)
-        o?.setOnClickListener(this)
-        p?.setOnClickListener(this)
-        a?.setOnClickListener(this)
-        s?.setOnClickListener(this)
-        d?.setOnClickListener(this)
-        f?.setOnClickListener(this)
-        g?.setOnClickListener(this)
-        h?.setOnClickListener(this)
-        j?.setOnClickListener(this)
-        k?.setOnClickListener(this)
-        l?.setOnClickListener(this)
-        z?.setOnClickListener(this)
-        x?.setOnClickListener(this)
-        c?.setOnClickListener(this)
-        v?.setOnClickListener(this)
-        b?.setOnClickListener(this)
-        n?.setOnClickListener(this)
-        m?.setOnClickListener(this)
+//        q?.setOnClickListener(this)
+//        w?.setOnClickListener(this)
+//        e?.setOnClickListener(this)
+//        r?.setOnClickListener(this)
+//        t?.setOnClickListener(this)
+//        y?.setOnClickListener(this)
+//        u?.setOnClickListener(this)
+//        i?.setOnClickListener(this)
+//        o?.setOnClickListener(this)
+//        p?.setOnClickListener(this)
+//        a?.setOnClickListener(this)
+//        s?.setOnClickListener(this)
+//        d?.setOnClickListener(this)
+//        f?.setOnClickListener(this)
+//        g?.setOnClickListener(this)
+//        h?.setOnClickListener(this)
+//        j?.setOnClickListener(this)
+//        k?.setOnClickListener(this)
+//        l?.setOnClickListener(this)
+//        z?.setOnClickListener(this)
+//        x?.setOnClickListener(this)
+//        c?.setOnClickListener(this)
+//        v?.setOnClickListener(this)
+//        b?.setOnClickListener(this)
+//        n?.setOnClickListener(this)
+//        m?.setOnClickListener(this)
 
+    }
+
+    fun loopButtons(){
+        val letters = arrayOf("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+        for (itr in letters){
+            val bttns = resources.getIdentifier(itr, "id", packageName)
+            findViewById<TextView>(bttns).setOnClickListener(this)
+        }
     }
 
     protected fun initgame(){
@@ -188,11 +142,12 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         mTextCounter = findViewById<View>(R.id.counter) as? TextView
         img = findViewById<View>(R.id.canvas) as? ImageView
         hint = findViewById<View>(R.id.hint) as? ImageButton
+        reveal = findViewById<View>(R.id.reveal) as? ImageButton
         reload = findViewById<View>(R.id.reload) as? ImageButton
 
         tmpword = findViewById<View>(R.id.tmpword) as? TextView
-        lvl = findViewById<View>(R.id.lvl) as? TextView
-        lvl?.text = this.localClassName
+//        lvl = findViewById<View>(R.id.lvl) as? TextView
+//        lvl?.text = this.localClassName
     }
 
     protected fun fetchword(){
@@ -201,15 +156,22 @@ open class levels : AppCompatActivity(), View.OnClickListener{
 //                @Override
 //                fun run() {
                 try {
-
-                    val doc = Jsoup.connect(url.toString()).get() as Document
-                    frame?.visibility = View.VISIBLE
-                    val elementsHtml = doc.getElementById("random_word") as Element
-                    val word = elementsHtml.text()
+                    var word = "--"
+                    var doc : Document? = null
+                    var elementsHtml : Element
+                    while (!word.matches("^[a-zA-Z]*$".toRegex()) ){
+                        doc = Jsoup.connect(url.toString()).get() as Document
+                        frame?.visibility = View.VISIBLE
+                        elementsHtml = doc.getElementById("random_word") as Element
+                        word = elementsHtml.text()
+                    }
+//                    word = "--jj--"
+//                    word = word.replace("-"," ")
                     randomword = word.toString().uppercase()
-                    definition = doc.getElementById("random_word_definition")?.text()
+                    definition = doc?.getElementById("random_word_definition")?.text()
+
                     mTextViewResult?.text = "-".repeat(randomword!!.length)
-                    mTextCounter?.text = randomword?.length.toString().plus(" letters  | Counter = ").plus(counter.toString())
+                    mTextCounter?.text = randomword?.length.toString().plus(" letters ")
                     tmpword?.text = randomword
                 }
                 catch (e : IOException){
@@ -255,51 +217,74 @@ open class levels : AppCompatActivity(), View.OnClickListener{
             return
         }
         counter--
-        mTextCounter?.text = randomword?.length.toString().plus(" letters  | Counter = ").plus(counter.toString())
     }
 
     protected fun checkcounter(){
         if(this.counter === 0) {
-            mTextCounter?.text = "Game Over"
-            endgame()
+//            mTextCounter?.visibility = View.INVISIBLE
+            endgame(lossMsg)
         }
         if (!mTextViewResult!!.text.contains("-") && counter != 0) {
-            mTextCounter?.text = "you won"
-            endgame()
+//            mTextCounter?.visibility = View.INVISIBLE
+            endgame(winMsg)
         }
         if (counter == 3)
             hint?.visibility = View.VISIBLE
     }
 
-    protected fun endgame(){
+    protected fun endgame(outputMsg : String){
         mTextViewResult?.text = randomword
         mTextDefinition?.text = definition
         mTextDefinition?.visibility = View.VISIBLE
-        onButtonShowPopupWindowClick()
+//        hint?.visibility = View.INVISIBLE
+
+        val dict = findViewById<View>(R.id.dict)
+        var params = dict.getLayoutParams()
+        params.height = LinearLayout.LayoutParams.WRAP_CONTENT
+        params.width = LinearLayout.LayoutParams.WRAP_CONTENT
+        dict.setLayoutParams(params);
+        val dictt = dict as TextView
+//        mTextCounter?.text = definition
+
+        hint?.visibility = View.INVISIBLE
+        params = hint?.getLayoutParams()
+        params.width = 0
+
+        onButtonShowPopupWindowClick(outputMsg)
     }
 
-    fun onButtonShowPopupWindowClick() {
+    fun onButtonShowPopupWindowClick(outputMsg : String) {
 
         // inflate the layout of the popup window
         val inflater: LayoutInflater =
-            getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
 //        val inflater: LayoutInflater? = null
 //        getSystemService(LAYOUT_INFLATER_SERVICE)
         val popupView = inflater?.inflate(R.layout.popup_window, null) as? View
 
         // create the popup window
-        val width = LinearLayout.LayoutParams.MATCH_PARENT
-        val height = LinearLayout.LayoutParams.MATCH_PARENT
+//        val width = LinearLayout.LayoutParams.MATCH_PARENT
+//        val height = LinearLayout.LayoutParams.MATCH_PARENT
+        popuplocation = findViewById<View>(R.id.keyboard) as? LinearLayout
+//        val keyboard = findViewById<View>(R.id.keyboard) as? LinearLayout
+//        val params = keyboard?.getLayoutParams()
+//        params?.width  = keyboard?.width
+//        params?.height  = keyboard?.height
+        val coord = IntArray(2)
+        popuplocation?.getLocationInWindow(coord)
+        val width = coord!![0]
+        val height = coord!![1]
         val focusable = false; // lets taps outside the popup also dismiss it
-        var popupWindow = PopupWindow(popupView, width, height, focusable)
+        var popupWindow = PopupWindow(popupView, popuplocation?.width!!, popuplocation?.height!!, focusable)
 
         msg = popupView?.findViewById<View>(R.id.endgamemsg) as? TextView
-        msg?.text = "You won"
+        msg?.text = outputMsg
         // show the popup window
         // which view you pass in doesn't matter, it is only used for the window tolken
         popupWindow.setOutsideTouchable(false)
 //        popupWindow.setIgnoreCheekPress()
-        popupWindow.showAtLocation(mTextCounter, Gravity.CENTER, 0, 0)
+        disableButtons()
+        popupWindow.showAtLocation(mTextCounter, Gravity.NO_GRAVITY, width, height)
 
         // dismiss the popup window when touched
         popupView!!.setOnTouchListener(object : View.OnTouchListener {
@@ -313,6 +298,11 @@ open class levels : AppCompatActivity(), View.OnClickListener{
                 return v?.onTouchEvent(event) ?: true
             }
         })
+    }
+
+    fun disableButtons(){
+        hint?.setClickable(false)
+        reveal?.setClickable(false)
     }
 
     fun revealLetter(v : View){
@@ -334,7 +324,7 @@ open class levels : AppCompatActivity(), View.OnClickListener{
 
         val res = StringUtils.difference(mTextViewResult!!.text as String?, randomword ).toString()
         if (res == "")
-            endgame()
+            endgame(winMsg)
     }
 
     fun reload(){
@@ -343,8 +333,16 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         overridePendingTransition(androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom, androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom);
     }
 
+    fun reload(v : View){
+        this.finish()
+        this.startActivity(this.getIntent())
+    }
+
+    fun goback(v : View){
+        onBackPressed()
+    }
+
     override fun onClick(view: View) {
-//
         val inp = view as Button
 
         checkletter(inp.text as String, inp)
@@ -353,5 +351,27 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         checkcounter()
         inp.setClickable(false)
         updateImage()
+    }
+
+    private var backToast : Toast? = null
+    private var backPressedTime:Long = 0
+    override fun onBackPressed() {
+//            if(backtoast!=null && backtoast!!.getView()?.getWindowToken() !=null) {
+//                finish();
+//            } else {
+//                backtoast = Toast.makeText(this, "Press back to exit", Toast.LENGTH_SHORT)
+//                backtoast?.show()
+//            }
+
+        backToast = Toast.makeText(this, "Press back again to leave the app.", Toast.LENGTH_LONG)
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast?.cancel()
+            super.onBackPressed()
+            return
+        } else {
+            backToast?.show()
+        }
+        backPressedTime = System.currentTimeMillis()
+
     }
 }

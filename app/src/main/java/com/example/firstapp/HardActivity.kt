@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 
+
 class HardActivity : levels(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +14,8 @@ class HardActivity : levels(), View.OnClickListener {
 
         url = "https://randomword.com"
 
-        setButtons()
+//        setButtons()
+        loopButtons()
         initgame()
         fetchword()
     }
@@ -24,10 +26,9 @@ class HardActivity : levels(), View.OnClickListener {
         mTextDefinition!!.visibility = View.VISIBLE
     }
 
+
     override fun onClick(view: View) {
 
-        println("########### "+view.id.toString())
-//
         val inp = view as Button
 
         checkletter(inp.text as String, inp)
@@ -37,4 +38,5 @@ class HardActivity : levels(), View.OnClickListener {
         inp.setClickable(false)
         updateImage()
     }
+
 }
