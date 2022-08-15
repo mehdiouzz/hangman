@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/canvas"
@@ -32,6 +32,45 @@
                 android:textSize="30dp"
                 android:gravity="center"
                 android:onClick="startGame"/>
+
+            <LinearLayout
+                android:id="@+id/levels"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/easy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="  Easy   "
+                    android:textSize="30dp"
+                    android:gravity="center"
+                    android:onClick="startGame"/>
+
+                <Button
+                    android:id="@+id/medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="Medium"
+                    android:textSize="30dp"
+                    android:gravity="center"
+                    android:onClick="startGame"/>
+
+                <Button
+                    android:id="@+id/hard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="  Hard  "
+                    android:textSize="30dp"
+                    android:gravity="center"
+                    android:onClick="HardGame"/>
+            </LinearLayout>
 
         </LinearLayout>
 

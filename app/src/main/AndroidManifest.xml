@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirstApp.NoActionBar"
         tools:targetApi="31">
+        <activity
+            android:name=".MediumActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HardActivity"
+            android:exported="false" />
         <activity android:name=".EasyActivity" />
         <activity
             android:name=".MainActivity"

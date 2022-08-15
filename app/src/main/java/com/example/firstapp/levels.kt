@@ -15,28 +15,115 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.io.IOException
 
-open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
+open class levels : AppCompatActivity(), View.OnClickListener{
 
-    private var url = "https://randomword.com/vocabulary"
-    private var frame : RelativeLayout? = null
-    private var mTextViewResult : TextView? = null
-    private var mTextDefinition : TextView? = null
-    private var mTextCounter : TextView? = null
+    protected var url : String? = null
+    protected var frame : RelativeLayout? = null
+    protected var mTextViewResult : TextView? = null
+    protected var mTextDefinition : TextView? = null
+    protected var mTextCounter : TextView? = null
     private var tmpword : TextView? = null
-    private var toast: Toast? = null
-    private var counter = 7
-    private var randomword: String? = null
-    private var definition: String? = null
-    private var img : ImageView? = null
-    private var hint: ImageButton? = null
-    private var reload: ImageButton? = null
+    protected var toast: Toast? = null
+    protected var counter = 7
+    protected var randomword: String? = null
+    protected var definition: String? = null
+    protected var img : ImageView? = null
+    protected var hint: ImageButton? = null
+    protected var reload: ImageButton? = null
+    protected var msg : TextView? = null
+
+    protected var lvl : TextView? = null
+
+    protected var q : Button? = null
+    protected var w : Button? = null
+    protected var e : Button? = null
+    protected var r : Button? = null
+    protected var t : Button? = null
+    protected var y : Button? = null
+    protected var u : Button? = null
+    protected var i : Button? = null
+    protected var o : Button? = null
+    protected var p : Button? = null
+    protected var a : Button? = null
+    protected var s : Button? = null
+    protected var d : Button? = null
+    protected var f : Button? = null
+    protected var g : Button? = null
+    protected var h : Button? = null
+    protected var j : Button? = null
+    protected var k : Button? = null
+    protected var l : Button? = null
+    protected var z : Button? = null
+    protected var x : Button? = null
+    protected var c : Button? = null
+    protected var v : Button? = null
+    protected var b : Button? = null
+    protected var n : Button? = null
+    protected var m : Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game)
 
-        toast = Toast.makeText(this,"please check your connection",Toast.LENGTH_SHORT)
-        initgame()
+
+        q = findViewById<View>(R.id.q) as? Button
+        w = findViewById<View>(R.id.w) as? Button
+        e = findViewById<View>(R.id.e) as? Button
+        r = findViewById<View>(R.id.r) as? Button
+        t = findViewById<View>(R.id.t) as? Button
+        y = findViewById<View>(R.id.y) as? Button
+        u = findViewById<View>(R.id.u) as? Button
+        i = findViewById<View>(R.id.i) as? Button
+        o = findViewById<View>(R.id.o) as? Button
+        p = findViewById<View>(R.id.p) as? Button
+        a = findViewById<View>(R.id.a) as? Button
+        s = findViewById<View>(R.id.s) as? Button
+        d = findViewById<View>(R.id.d) as? Button
+        f = findViewById<View>(R.id.f) as? Button
+        g = findViewById<View>(R.id.g) as? Button
+        h = findViewById<View>(R.id.h) as? Button
+        j = findViewById<View>(R.id.j) as? Button
+        k = findViewById<View>(R.id.k) as? Button
+        l = findViewById<View>(R.id.l) as? Button
+        z = findViewById<View>(R.id.z) as? Button
+        x = findViewById<View>(R.id.x) as? Button
+        c = findViewById<View>(R.id.c) as? Button
+        v = findViewById<View>(R.id.v) as? Button
+        b = findViewById<View>(R.id.b) as? Button
+        n = findViewById<View>(R.id.n) as? Button
+        m = findViewById<View>(R.id.m) as? Button
+
+
+
+        q?.setOnClickListener(this)
+        w?.setOnClickListener(this)
+        e?.setOnClickListener(this)
+        r?.setOnClickListener(this)
+        t?.setOnClickListener(this)
+        y?.setOnClickListener(this)
+        u?.setOnClickListener(this)
+        i?.setOnClickListener(this)
+        o?.setOnClickListener(this)
+        p?.setOnClickListener(this)
+        a?.setOnClickListener(this)
+        s?.setOnClickListener(this)
+        d?.setOnClickListener(this)
+        f?.setOnClickListener(this)
+        g?.setOnClickListener(this)
+        h?.setOnClickListener(this)
+        j?.setOnClickListener(this)
+        k?.setOnClickListener(this)
+        l?.setOnClickListener(this)
+        z?.setOnClickListener(this)
+        x?.setOnClickListener(this)
+        c?.setOnClickListener(this)
+        v?.setOnClickListener(this)
+        b?.setOnClickListener(this)
+        n?.setOnClickListener(this)
+        m?.setOnClickListener(this)
+
+    }
+
+    fun setButtons(){
 
         val q = findViewById<View>(R.id.q) as? Button
         val w = findViewById<View>(R.id.w) as? Button
@@ -92,10 +179,9 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
         n?.setOnClickListener(this)
         m?.setOnClickListener(this)
 
-        fetchword()
     }
 
-    private fun initgame(){
+    protected fun initgame(){
         frame = findViewById<View>(R.id.frame) as? RelativeLayout
         mTextViewResult = findViewById<View>(R.id.radomword) as? TextView
         mTextDefinition = findViewById<View>(R.id.definition) as? TextView
@@ -105,16 +191,18 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
         reload = findViewById<View>(R.id.reload) as? ImageButton
 
         tmpword = findViewById<View>(R.id.tmpword) as? TextView
+        lvl = findViewById<View>(R.id.lvl) as? TextView
+        lvl?.text = this.localClassName
     }
 
-    private fun fetchword(){
+    protected fun fetchword(){
         runOnUiThread {
             Thread(Runnable() {
 //                @Override
 //                fun run() {
                 try {
 
-                    val doc = Jsoup.connect(url).get() as Document
+                    val doc = Jsoup.connect(url.toString()).get() as Document
                     frame?.visibility = View.VISIBLE
                     val elementsHtml = doc.getElementById("random_word") as Element
                     val word = elementsHtml.text()
@@ -133,19 +221,7 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
         }
     }
 
-    override fun onClick(view: View) {
-
-        val inp = view as Button
-
-        checkletter(inp.text as String, inp)
-        inp.setBackgroundColor(Color.GRAY)
-
-        checkcounter()
-        inp.setClickable(false)
-        updateImage()
-    }
-
-    private fun updateImage() {
+    protected fun updateImage() {
 //        var imgName = "hangman".plus(counter)
 //        val image = R.drawable.imgName as Drawable
 //        img!!.setImageResource(R.drawable.image)
@@ -156,7 +232,7 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
         img?.setImageResource(resID );
     }
 
-    private fun writeLetter(lett : String, arr : ArrayList<Int>) {
+    protected fun writeLetter(lett : String, arr : ArrayList<Int>) {
 
         var txt = mTextViewResult?.text.toString()
 
@@ -167,7 +243,7 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
         mTextViewResult?.text = txt
     }
 
-    private fun checkletter(lett: String, butt : Button){
+    protected fun checkletter(lett: String, butt : Button){
 
         if (!butt.isClickable) return
         if (randomword?.contains(lett, ignoreCase = true)!!)
@@ -182,7 +258,7 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
         mTextCounter?.text = randomword?.length.toString().plus(" letters  | Counter = ").plus(counter.toString())
     }
 
-    private fun checkcounter(){
+    protected fun checkcounter(){
         if(this.counter === 0) {
             mTextCounter?.text = "Game Over"
             endgame()
@@ -195,52 +271,18 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
             hint?.visibility = View.VISIBLE
     }
 
-    private fun endgame(){
+    protected fun endgame(){
         mTextViewResult?.text = randomword
         mTextDefinition?.text = definition
         mTextDefinition?.visibility = View.VISIBLE
         onButtonShowPopupWindowClick()
     }
 
-    fun revealLetter(v : View){
-
-        var diff = randomword
-        var lett = diff?.random().toString()
-
-        while (mTextViewResult?.text?.contains(lett!!, ignoreCase = true)!!)
-        {
-            diff = diff?.replace(lett, "")
-            lett = diff?.random().toString()
-        }
-
-        val indexes = Regex(lett).findAll(randomword!!)
-            .map { it.range.first }
-            .toList()
-        writeLetter(lett, ArrayList(indexes) )
-        v.setClickable(false)
-
-        val res = StringUtils.difference(mTextViewResult!!.text as String?, randomword ).toString()
-        if (res == "")
-            endgame()
-    }
-
-    fun displayHint(v : View){
-        var bt = v as ImageButton
-        v.setClickable(false)
-        mTextDefinition!!.text = definition
-        mTextDefinition!!.visibility = View.VISIBLE
-    }
-    fun reload(){
-        this.finish()
-        this.startActivity(this.getIntent())
-        overridePendingTransition(androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom, androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom);
-    }
-
-    private var msg : TextView? = null
     fun onButtonShowPopupWindowClick() {
 
         // inflate the layout of the popup window
-        val inflater: LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater: LayoutInflater =
+            getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 //        val inflater: LayoutInflater? = null
 //        getSystemService(LAYOUT_INFLATER_SERVICE)
         val popupView = inflater?.inflate(R.layout.popup_window, null) as? View
@@ -271,6 +313,45 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
                 return v?.onTouchEvent(event) ?: true
             }
         })
+    }
 
+    fun revealLetter(v : View){
+
+        var diff = randomword
+        var lett = diff?.random().toString()
+
+        while (mTextViewResult?.text?.contains(lett!!, ignoreCase = true)!!)
+        {
+            diff = diff?.replace(lett, "")
+            lett = diff?.random().toString()
+        }
+
+        val indexes = Regex(lett).findAll(randomword!!)
+            .map { it.range.first }
+            .toList()
+        writeLetter(lett, ArrayList(indexes) )
+        v.setClickable(false)
+
+        val res = StringUtils.difference(mTextViewResult!!.text as String?, randomword ).toString()
+        if (res == "")
+            endgame()
+    }
+
+    fun reload(){
+        this.finish()
+        this.startActivity(this.getIntent())
+        overridePendingTransition(androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom, androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom);
+    }
+
+    override fun onClick(view: View) {
+//
+        val inp = view as Button
+
+        checkletter(inp.text as String, inp)
+        inp.setBackgroundColor(Color.GRAY)
+
+        checkcounter()
+        inp.setClickable(false)
+        updateImage()
     }
 }
