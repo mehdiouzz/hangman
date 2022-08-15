@@ -1,10 +1,15 @@
 package com.example.firstapp
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import org.apache.commons.lang3.StringUtils
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -193,6 +198,7 @@ class EasyActivity : AppCompatActivity() ,View.OnClickListener{
         mTextViewResult?.text = randomword
         mTextDefinition?.text = definition
         mTextDefinition?.visibility = View.VISIBLE
+        onButtonShowPopupWindowClick()
     }
 
     fun revealLetter(v : View){
@@ -211,6 +217,10 @@ class EasyActivity : AppCompatActivity() ,View.OnClickListener{
             .toList()
         writeLetter(lett, ArrayList(indexes) )
         v.setClickable(false)
+
+        val res = StringUtils.difference(mTextViewResult!!.text as String?, randomword ).toString()
+        if (res == "")
+            endgame()
     }
 
     fun displayHint(v : View){
@@ -219,9 +229,47 @@ class EasyActivity : AppCompatActivity() ,View.OnClickListener{
         mTextDefinition!!.text = definition
         mTextDefinition!!.visibility = View.VISIBLE
     }
-    fun reload(v : View){
+    fun reload(){
         this.finish()
         this.startActivity(this.getIntent())
         overridePendingTransition(androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom, androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom);
+    }
+
+    private var msg : TextView? = null
+    fun onButtonShowPopupWindowClick() {
+
+        // inflate the layout of the popup window
+        val inflater: LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//        val inflater: LayoutInflater? = null
+//        getSystemService(LAYOUT_INFLATER_SERVICE)
+        val popupView = inflater?.inflate(R.layout.popup_window, null) as? View
+
+        // create the popup window
+        val width = LinearLayout.LayoutParams.MATCH_PARENT
+        val height = LinearLayout.LayoutParams.MATCH_PARENT
+        val focusable = false; // lets taps outside the popup also dismiss it
+        var popupWindow = PopupWindow(popupView, width, height, focusable)
+
+        msg = popupView?.findViewById<View>(R.id.endgamemsg) as? TextView
+        msg?.text = "You won"
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+        popupWindow.setOutsideTouchable(false)
+//        popupWindow.setIgnoreCheekPress()
+        popupWindow.showAtLocation(mTextCounter, Gravity.CENTER, 0, 0)
+
+        // dismiss the popup window when touched
+        popupView!!.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                when (event?.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        popupWindow.dismiss()
+                        reload()
+                    }
+                }
+                return v?.onTouchEvent(event) ?: true
+            }
+        })
+
     }
 }

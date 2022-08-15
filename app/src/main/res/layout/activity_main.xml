@@ -51,7 +51,8 @@
                 android:textColor="@color/black"
                 android:text=" Settings"
                 android:textSize="30dp"
-                android:gravity="center" />
+                android:gravity="center"
+                android:onClick="onButtonShowPopupWindowClick"/>
         </LinearLayout>
 
     </RelativeLayout>

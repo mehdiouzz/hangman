@@ -17,11 +17,11 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
     }
 
-    fun startGame(v : View){
-        intent = Intent(this, EasyActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
+            fun startGame(v : View){
+                intent = Intent(this, EasyActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
 }
 
 
