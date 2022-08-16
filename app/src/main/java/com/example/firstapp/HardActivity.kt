@@ -24,6 +24,7 @@ class HardActivity : levels(), View.OnClickListener {
         v.setClickable(false)
         mTextDefinition!!.text = definition
         mTextDefinition!!.visibility = View.VISIBLE
+        hint!!.setImageResource(R.drawable.lamp)
     }
 
 

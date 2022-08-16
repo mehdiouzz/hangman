@@ -316,11 +316,19 @@ open class levels : AppCompatActivity(), View.OnClickListener{
             lett = diff?.random().toString()
         }
 
+        val bttns = resources.getIdentifier(lett.lowercase(), "id", packageName)
+        val btt = findViewById<TextView>(bttns)
+        btt.setBackgroundColor(Color.GRAY)
+        btt.setClickable(false)
+
+
         val indexes = Regex(lett).findAll(randomword!!)
             .map { it.range.first }
             .toList()
+
         writeLetter(lett, ArrayList(indexes) )
         v.setClickable(false)
+        v.setBackgroundResource(R.drawable.hidden)
 
         val res = StringUtils.difference(mTextViewResult!!.text as String?, randomword ).toString()
         if (res == "")
