@@ -5,11 +5,14 @@ package com.example.firstapp
 //import androidx.appcompat.app.AppCompatActivity
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import java.io.*
 
 
 class MainActivity : AppCompatActivity(){
@@ -27,7 +30,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     fun easyGame(v : View){
-        intent = Intent(this, EasyActivity::class.java)
+        intent = Intent(this, FacileActivity::class.java)
         startActivity(intent)
 //        finish()
     }
@@ -35,6 +38,7 @@ class MainActivity : AppCompatActivity(){
     fun mediumGame(v : View){
         intent = Intent(this, MediumActivity::class.java)
         startActivity(intent)
+        writefile()
 //        finish()
     }
 
@@ -64,6 +68,51 @@ class MainActivity : AppCompatActivity(){
         }
         backPressedTime = System.currentTimeMillis()
 
+    }
+
+    private var FILE_NAME = "words.txt"
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun writefile(){
+//        val mytext = "This is from code"
+//        var fos :FileOutputStream? = null;
+
+        try {
+//            var myExternalFile = File(getExternalFilesDir(.toString()),FILE_NAME)
+//            val filename = fileName.text.toString()
+            var myfile = File(getExternalFilesDir(null), FILE_NAME)
+            var fis = FileInputStream(myfile);
+            var inp =  DataInputStream(fis);
+            var br = BufferedReader( InputStreamReader(inp));
+            var strLine = br.readLines().random()
+//            var myData : String
+//            br.readLine()
+//            for (i in br.lines()) {
+//                strLine += i;
+//            }
+            println("########### " + strLine)
+//            val file = File(getExternalFilesDir(null), "kotlinfile.txt")
+//            file.appendText("$mytext")
+//            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+//            fos.write(mytext.toByteArray());
+//
+////            mEditText.getText().clear();
+//            Toast.makeText(this, "Saved to " + getExternalFilesDir(null) + "/" + FILE_NAME, Toast.LENGTH_LONG).show()
+//            println("Saved to " + getFilesDir() + "/" + FILE_NAME)
+        } catch (e : FileNotFoundException) {
+            e.printStackTrace();
+        } catch (e: IOException) {
+            e.printStackTrace();
+        }
+//        } finally {
+//            if (fos != null) {
+//                try {
+//                    fos.close();
+//                } catch (e:IOException) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
     }
 }
 

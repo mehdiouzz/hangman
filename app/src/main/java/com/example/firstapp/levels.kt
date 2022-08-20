@@ -1,18 +1,17 @@
 package com.example.firstapp
 
+import android.animation.ValueAnimator
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.LinearInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import org.apache.commons.lang3.StringUtils
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
-import java.io.IOException
 
 open class levels : AppCompatActivity(), View.OnClickListener{
 
@@ -21,8 +20,8 @@ open class levels : AppCompatActivity(), View.OnClickListener{
     protected var mTextViewResult : TextView? = null
     protected var mTextDefinition : TextView? = null
     protected var mTextCounter : TextView? = null
-    private var tmpword : TextView? = null
     protected var toast: Toast? = null
+
     protected var counter = 7
     protected var randomword: String? = null
     protected var definition: String? = null
@@ -36,6 +35,11 @@ open class levels : AppCompatActivity(), View.OnClickListener{
     protected var popuplocation : LinearLayout? = null
     protected var winMsg = "You won" as String
     protected var lossMsg = "Game Over" as String
+    protected var warnViewed = false
+    val letters = arrayOf("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+    val dict = mapOf("A" to 1,"B" to 3,"C" to 3,"D" to 2,"E" to 1,"F" to 4,"G" to 2,"H" to 4,"I" to 1,"J" to 7,"K" to 5,"L" to 1,"M" to 3,"N" to 1,"O" to 1,"P" to 3,"Q" to 1,"R" to 1,"S" to 1,"T" to 1,"U" to 1,"V" to 4,"W" to 4,"X" to 8,"Y" to 4,"Z" to 8)
+    protected var score = 0
+    protected var revealed = false
 
     protected var q : Button? = null
     protected var w : Button? = null
@@ -64,71 +68,15 @@ open class levels : AppCompatActivity(), View.OnClickListener{
     protected var n : Button? = null
     protected var m : Button? = null
 
+    protected final var sd : MediaPlayer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-    }
-
-    fun setButtons(){
-
-        val q = findViewById<View>(R.id.q) as? Button
-        val w = findViewById<View>(R.id.w) as? Button
-        val e = findViewById<View>(R.id.e) as? Button
-        val r = findViewById<View>(R.id.r) as? Button
-        val t = findViewById<View>(R.id.t) as? Button
-        val y = findViewById<View>(R.id.y) as? Button
-        val u = findViewById<View>(R.id.u) as? Button
-        val i = findViewById<View>(R.id.i) as? Button
-        val o = findViewById<View>(R.id.o) as? Button
-        val p = findViewById<View>(R.id.p) as? Button
-        val a = findViewById<View>(R.id.a) as? Button
-        val s = findViewById<View>(R.id.s) as? Button
-        val d = findViewById<View>(R.id.d) as? Button
-        val f = findViewById<View>(R.id.f) as? Button
-        val g = findViewById<View>(R.id.g) as? Button
-        val h = findViewById<View>(R.id.h) as? Button
-        val j = findViewById<View>(R.id.j) as? Button
-        val k = findViewById<View>(R.id.k) as? Button
-        val l = findViewById<View>(R.id.l) as? Button
-        val z = findViewById<View>(R.id.z) as? Button
-        val x = findViewById<View>(R.id.x) as? Button
-        val c = findViewById<View>(R.id.c) as? Button
-        val v = findViewById<View>(R.id.v) as? Button
-        val b = findViewById<View>(R.id.b) as? Button
-        val n = findViewById<View>(R.id.n) as? Button
-        val m = findViewById<View>(R.id.m) as? Button
-
-//        q?.setOnClickListener(this)
-//        w?.setOnClickListener(this)
-//        e?.setOnClickListener(this)
-//        r?.setOnClickListener(this)
-//        t?.setOnClickListener(this)
-//        y?.setOnClickListener(this)
-//        u?.setOnClickListener(this)
-//        i?.setOnClickListener(this)
-//        o?.setOnClickListener(this)
-//        p?.setOnClickListener(this)
-//        a?.setOnClickListener(this)
-//        s?.setOnClickListener(this)
-//        d?.setOnClickListener(this)
-//        f?.setOnClickListener(this)
-//        g?.setOnClickListener(this)
-//        h?.setOnClickListener(this)
-//        j?.setOnClickListener(this)
-//        k?.setOnClickListener(this)
-//        l?.setOnClickListener(this)
-//        z?.setOnClickListener(this)
-//        x?.setOnClickListener(this)
-//        c?.setOnClickListener(this)
-//        v?.setOnClickListener(this)
-//        b?.setOnClickListener(this)
-//        n?.setOnClickListener(this)
-//        m?.setOnClickListener(this)
-
+        toast = Toast.makeText(this,"please check your connection",Toast.LENGTH_SHORT)
     }
 
     fun loopButtons(){
-        val letters = arrayOf("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+
         for (itr in letters){
             val bttns = resources.getIdentifier(itr, "id", packageName)
             findViewById<TextView>(bttns).setOnClickListener(this)
@@ -145,43 +93,41 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         reveal = findViewById<View>(R.id.reveal) as? ImageButton
         reload = findViewById<View>(R.id.reload) as? ImageButton
 
-        tmpword = findViewById<View>(R.id.tmpword) as? TextView
-//        lvl = findViewById<View>(R.id.lvl) as? TextView
+        lvl = findViewById<View>(R.id.lvl) as? TextView
 //        lvl?.text = this.localClassName
     }
 
-    protected fun fetchword(){
-        runOnUiThread {
-            Thread(Runnable() {
-//                @Override
-//                fun run() {
-                try {
-                    var word = "--"
-                    var doc : Document? = null
-                    var elementsHtml : Element
-                    while (!word.matches("^[a-zA-Z]*$".toRegex()) ){
-                        doc = Jsoup.connect(url.toString()).get() as Document
-                        frame?.visibility = View.VISIBLE
-                        elementsHtml = doc.getElementById("random_word") as Element
-                        word = elementsHtml.text()
-                    }
-//                    word = "--jj--"
-//                    word = word.replace("-"," ")
-                    randomword = word.toString().uppercase()
-                    definition = doc?.getElementById("random_word_definition")?.text()
-
-                    mTextViewResult?.text = "-".repeat(randomword!!.length)
-                    mTextCounter?.text = randomword?.length.toString().plus(" letters ")
-                    tmpword?.text = randomword
-                }
-                catch (e : IOException){
-
-                    frame?.visibility = View.INVISIBLE
-                    toast?.show()
-                }
-            }).start()
-        }
-    }
+//    protected open fun fetchword(){
+//        runOnUiThread {
+//            Thread(Runnable() {
+////                @Override
+////                fun run() {
+//                try {
+//                    var word = "--"
+//                    var doc : Document? = null
+//                    var elementsHtml : Element
+//                    while (!word.matches("^[a-zA-Z]*$".toRegex()) ){
+//                        doc = Jsoup.connect(url.toString()).get() as Document
+//                        frame?.visibility = View.VISIBLE
+//                        elementsHtml = doc.getElementById("random_word") as Element
+//                        word = elementsHtml.text()
+//                    }
+////                    word = "--jj--"
+////                    word = word.replace("-"," ")
+//                    randomword = word.toString().uppercase()
+//                    definition = doc?.getElementById("random_word_definition")?.text()
+//
+//                    mTextViewResult?.text = "-".repeat(randomword!!.length)
+//                    mTextCounter?.text = randomword?.length.toString().plus(" letters ")
+//                }
+//                catch (e : IOException){
+//
+//                    frame?.visibility = View.INVISIBLE
+//                    toast?.show()
+//                }
+//            }).start()
+//        }
+//    }
 
     protected fun updateImage() {
 //        var imgName = "hangman".plus(counter)
@@ -214,29 +160,48 @@ open class levels : AppCompatActivity(), View.OnClickListener{
                 .map { it.range.first }
                 .toList()
             writeLetter(butt.text as String, ArrayList(indexes) )
+            score += indexes.size * dict[lett]!!
+            lvl?.text = score.toString()
             return
         }
         counter--
     }
 
-    protected fun checkcounter(){
-        if(this.counter === 0) {
-//            mTextCounter?.visibility = View.INVISIBLE
-            endgame(lossMsg)
+    protected open fun checkcounter() {
+        when (this.counter) {
+            0 -> endgame(lossMsg)
+            3 -> {
+                hint?.visibility = View.VISIBLE
+            }
+            1 -> {
+                if (warnViewed == false) {
+//                    val warnsound = MediaPlayer.create(this, R.raw.danger)
+//                    warnsound?.start()
+                    val inflater = getLayoutInflater();
+                    val view = inflater.inflate(R.layout.warning, findViewById(R.id.popup));
+                    val dtoast = Toast(this);
+                    dtoast.setView(view);
+                    dtoast!!.setGravity(Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL, 0, 0)
+                    dtoast.show();
+                    warnViewed = true
+                }
+            }
         }
         if (!mTextViewResult!!.text.contains("-") && counter != 0) {
-//            mTextCounter?.visibility = View.INVISIBLE
+            if (counter == 7 && !revealed)
+                winMsg = "Perfect Score"
             endgame(winMsg)
         }
-        if (counter == 3)
-            hint?.visibility = View.VISIBLE
+
+
     }
 
     protected fun endgame(outputMsg : String){
         mTextViewResult?.text = randomword
         mTextDefinition?.text = definition
         mTextDefinition?.visibility = View.VISIBLE
-//        hint?.visibility = View.INVISIBLE
+        val keyboard = findViewById<View>(R.id.keyboard)
+        keyboard?.visibility = View.INVISIBLE
 
         val dict = findViewById<View>(R.id.dict)
         var params = dict.getLayoutParams()
@@ -249,8 +214,16 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         hint?.visibility = View.INVISIBLE
         params = hint?.getLayoutParams()
         params.width = 0
-
+        reveal?.isClickable = false
+        for (itr in letters) {
+            val bttns = resources.getIdentifier(itr, "id", packageName)
+            findViewById<TextView>(bttns).isClickable = false
+        }
         onButtonShowPopupWindowClick(outputMsg)
+
+
+//        bonus.visibility = View.INVISIBLE
+//        reveal?.translationY
     }
 
     fun onButtonShowPopupWindowClick(outputMsg : String) {
@@ -279,13 +252,42 @@ open class levels : AppCompatActivity(), View.OnClickListener{
 
         msg = popupView?.findViewById<View>(R.id.endgamemsg) as? TextView
         msg?.text = outputMsg
+
+
+        val bonus = popupView?.findViewById<View>(R.id.bonus) as TextView
+        if(outputMsg === lossMsg){
+            score = 0
+            bonus?.visibility = View.INVISIBLE
+        }
+        else
+        {
+            if (!revealed && winMsg === "Perfect Score") {
+                score += 10
+                bonus?.text = "+10"
+            }
+            else
+                score += 5
+
+            val valueAnimator = ValueAnimator.ofFloat(msg!!.y, msg!!.y-400).apply {
+                interpolator = LinearInterpolator()
+                duration = 1500
+            }
+            valueAnimator.addUpdateListener {
+                val value = it.animatedValue as Float
+                bonus?.translationY = value
+            }
+            valueAnimator.start()
+        }
+
+        val scor = popupView?.findViewById<View>(R.id.score) as? TextView
+        scor?.text = scor?.text.toString().plus(score.toString())
         // show the popup window
         // which view you pass in doesn't matter, it is only used for the window tolken
         popupWindow.setOutsideTouchable(false)
 //        popupWindow.setIgnoreCheekPress()
         disableButtons()
-        popupWindow.showAtLocation(mTextCounter, Gravity.NO_GRAVITY, width, height)
-
+        popupWindow.showAtLocation(hint, Gravity.TOP, width, height)
+        println("############## " + counter)
         // dismiss the popup window when touched
         popupView!!.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -310,6 +312,7 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         var diff = randomword
         var lett = diff?.random().toString()
 
+
         while (mTextViewResult?.text?.contains(lett!!, ignoreCase = true)!!)
         {
             diff = diff?.replace(lett, "")
@@ -329,6 +332,9 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         writeLetter(lett, ArrayList(indexes) )
         v.setClickable(false)
         v.setBackgroundResource(R.drawable.hidden)
+        revealed = true
+
+        score += indexes.size * dict[lett]!!
 
         val res = StringUtils.difference(mTextViewResult!!.text as String?, randomword ).toString()
         if (res == "")
@@ -338,7 +344,7 @@ open class levels : AppCompatActivity(), View.OnClickListener{
     fun reload(){
         this.finish()
         this.startActivity(this.getIntent())
-        overridePendingTransition(androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom, androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom);
+//        overridePendingTransition(androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom, androidx.navigation.ui.R.anim.abc_shrink_fade_out_from_bottom);
     }
 
     fun reload(v : View){
@@ -350,36 +356,42 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         onBackPressed()
     }
 
+    fun guess(v : View){
+
+    }
+
     override fun onClick(view: View) {
         val inp = view as Button
 
         checkletter(inp.text as String, inp)
         inp.setBackgroundColor(Color.GRAY)
+        sd?.start()
 
         checkcounter()
         inp.setClickable(false)
         updateImage()
     }
 
-    private var backToast : Toast? = null
-    private var backPressedTime:Long = 0
-    override fun onBackPressed() {
-//            if(backtoast!=null && backtoast!!.getView()?.getWindowToken() !=null) {
-//                finish();
-//            } else {
-//                backtoast = Toast.makeText(this, "Press back to exit", Toast.LENGTH_SHORT)
-//                backtoast?.show()
-//            }
-
-        backToast = Toast.makeText(this, "Press back again to leave the app.", Toast.LENGTH_LONG)
-        if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            backToast?.cancel()
-            super.onBackPressed()
-            return
-        } else {
-            backToast?.show()
-        }
-        backPressedTime = System.currentTimeMillis()
-
-    }
+//    private var backToast : Toast? = null
+//    private var backPressedTime:Long = 0
+//
+//    override fun onBackPressed() {
+////            if(backtoast!=null && backtoast!!.getView()?.getWindowToken() !=null) {
+////                finish();
+////            } else {
+////                backtoast = Toast.makeText(this, "Press back to exit", Toast.LENGTH_SHORT)
+////                backtoast?.show()
+////            }
+//
+//        backToast = Toast.makeText(this, "Press back again to leave the app.", Toast.LENGTH_LONG)
+//        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+//            backToast?.cancel()
+//            super.onBackPressed()
+//            return
+//        } else {
+//            backToast?.show()
+//        }
+//        backPressedTime = System.currentTimeMillis()
+//
+//    }
 }

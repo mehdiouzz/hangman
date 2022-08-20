@@ -9,7 +9,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.apache.commons.lang3.StringUtils
+import org.json.JSONArray
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -17,7 +20,7 @@ import java.io.IOException
 
 open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
 
-    private var url = "https://randomword.com/vocabulary"
+    private var url = "https://random-words-api.vercel.app/word"
     private var frame : RelativeLayout? = null
     private var mTextViewResult : TextView? = null
     private var mTextDefinition : TextView? = null
@@ -93,6 +96,7 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
         m?.setOnClickListener(this)
 
         fetchword()
+//        fetchdefintion()
     }
 
     private fun initgame(){
@@ -114,7 +118,18 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
 //                fun run() {
                 try {
 
-                    val doc = Jsoup.connect(url).get() as Document
+//                    val dfile = Typeface.createFromAsset(getAssets(), "file.txt");
+//                    val dfile = assets.openFd("file.txt")
+//                    R.raw.file.readLines
+//                    val inputStream: InputStream = File("file.txt").inputStream()
+//                    val inputString = inputStream.bufferedReader().use { it.readText() }
+//                    println(inputString)
+//                    val file = File(Context.filesDir, "myfile.txt")
+//                    val contents = file.readText() // Read file
+//                    randomword = File("/Users/mac/AndroidStudioProjects/firstApp/app/src/main/assets/file.txt").readLines().toString()
+//                    println("############# " + randomword)
+
+                    val doc = Jsoup.connect("https://randomword.com/vocabulary").get() as Document
                     frame?.visibility = View.VISIBLE
                     val elementsHtml = doc.getElementById("random_word") as Element
                     val word = elementsHtml.text()
@@ -123,6 +138,7 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
                     mTextViewResult?.text = "-".repeat(randomword!!.length)
                     mTextCounter?.text = randomword?.length.toString().plus(" letters  | Counter = ").plus(counter.toString())
                     tmpword?.text = randomword
+//                    fetchdefintion()
                 }
                 catch (e : IOException){
 
@@ -131,6 +147,95 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
                 }
             }).start()
         }
+    }
+
+    private val client = OkHttpClient()
+
+//    private fun fetchword(){
+//        runOnUiThread {
+//            Thread(Runnable() {
+//////                @Override
+////                fun run() {
+//                try {
+//                    val request = Request.Builder()
+//                        .url(url)
+//                        .build()
+//
+//                    client.newCall(request).execute().use { response ->
+//                        if (!response.isSuccessful) throw IOException("Unexpected code $response")
+//
+//                        for ((name, value) in response.headers) {
+//                            println("$name: $value")
+//                        }
+//
+////                        val jsonObject = JSONTokener(response.body.toString()).nextValue() as JSONObject
+//
+//                        val body =response.body!!.string()
+//                        println(body)
+//                        val bodytojson = JSONArray(body)
+//                        val value = bodytojson.getJSONObject(0)
+//                        randomword = value.getString("word")
+//                        println(value.getString("word"))
+//
+//                    }
+//                }
+//                catch (e : IOException){
+//                    frame?.visibility = View.INVISIBLE
+//                    toast?.show()
+//                }
+//            }).start()
+//            }
+//        }
+
+    private fun fetchdefintion(){
+//        runOnUiThread {
+//            Thread(Runnable() {
+////                @Override
+////                fun run() {
+//                    try {
+                        val ur = "https://api.dictionaryapi.dev/api/v2/entries/en/".plus(randomword)
+                        val request = Request.Builder()
+                            .url(ur)
+                            .build()
+
+                        client.newCall(request).execute().use { response ->
+                            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                            for ((name, value) in response.headers) {
+                                println("$name: $value")
+                            }
+
+//                        val jsonObject = JSONTokener(response.body.toString()).nextValue() as JSONObject
+
+                            val body = response.body!!.string()
+//                        println(body)
+                            val bodytojson = JSONArray(body).getJSONObject(0)
+                            val phonetic = bodytojson.getString("phonetic")
+                            val jarray = bodytojson.getJSONArray("meanings").getJSONObject(0).getJSONArray("definitions")
+                            val def = jarray.getJSONObject(0).getString("definition")
+                            definition = phonetic.plus(" : ").plus(def)
+//                        val value = bodytojson.getJSONObject(0)
+                            println("https://api.dictionaryapi.dev/api/v2/entries/en/${randomword?.lowercase()}")
+//                            if (phonetic != null)
+//                                println("$phonetic : $def")
+//                            else
+                                println("no phonetic : $def")
+//                            mTextDefinition?.text = phonetic.plus(" : ").plus(def)
+//                            mTextViewResult?.text = "phonetic.plus(plus(def)"
+//                        println(bodytojson.getJSONObject(0).getString("word"))
+//                        val jarray = JSONArray("[{\"Hello1\":\"1\"},{\"Hello2\":\"2\"}]")
+//                        val jobj = jarray.getJSONObject(0).getString("Hello1")
+//                        println("######## $jobj")
+
+
+                        }
+//                    } catch (e: IOException) {
+//                        frame?.visibility = View.INVISIBLE
+//                        toast?.show()
+//                    }
+////                }
+//            }).start()
+//        }
     }
 
     override fun onClick(view: View) {
@@ -199,7 +304,7 @@ open class EasyActivity : AppCompatActivity() ,View.OnClickListener{
         mTextViewResult?.text = randomword
         mTextDefinition?.text = definition
         mTextDefinition?.visibility = View.VISIBLE
-        onButtonShowPopupWindowClick()
+//        onButtonShowPopupWindowClick()
     }
 
     fun revealLetter(v : View){

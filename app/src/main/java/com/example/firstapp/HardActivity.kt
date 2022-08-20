@@ -4,6 +4,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
+import java.io.IOException
 
 
 class HardActivity : levels(), View.OnClickListener {
@@ -18,6 +22,38 @@ class HardActivity : levels(), View.OnClickListener {
         loopButtons()
         initgame()
         fetchword()
+    }
+
+    fun fetchword(){
+        runOnUiThread {
+            Thread(Runnable() {
+//                @Override
+//                fun run() {
+                try {
+                    var word = "--"
+                    var doc : Document? = null
+                    var elementsHtml : Element
+                    while (!word.matches("^[a-zA-Z]*$".toRegex()) ){
+                        doc = Jsoup.connect(url.toString()).get() as Document
+                        frame?.visibility = View.VISIBLE
+                        elementsHtml = doc.getElementById("random_word") as Element
+                        word = elementsHtml.text()
+                    }
+//                    word = "--jj--"
+//                    word = word.replace("-"," ")
+                    randomword = word.toString().uppercase()
+                    definition = doc?.getElementById("random_word_definition")?.text()
+
+                    mTextViewResult?.text = "-".repeat(randomword!!.length)
+                    mTextCounter?.text = randomword?.length.toString().plus(" letters ")
+                }
+                catch (e : IOException){
+
+                    frame?.visibility = View.INVISIBLE
+                    toast?.show()
+                }
+            }).start()
+        }
     }
 
     fun displayHint(v : View){
