@@ -1,6 +1,7 @@
 package com.example.firstapp
 
 import android.animation.ValueAnimator
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.view.animation.LinearInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import org.apache.commons.lang3.StringUtils
+
 
 open class levels : AppCompatActivity(), View.OnClickListener{
 
@@ -73,6 +75,7 @@ open class levels : AppCompatActivity(), View.OnClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         toast = Toast.makeText(this,"please check your connection",Toast.LENGTH_SHORT)
+
     }
 
     fun loopButtons(){
@@ -288,6 +291,7 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         disableButtons()
         popupWindow.showAtLocation(hint, Gravity.TOP, width, height)
         println("############## " + counter)
+        savedata()
         // dismiss the popup window when touched
         popupView!!.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -370,6 +374,26 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         checkcounter()
         inp.setClickable(false)
         updateImage()
+    }
+
+    fun savedata(){
+//        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+//        editor.putString(keyString, valueString)
+//        editor.commit()
+        val settings = applicationContext.getSharedPreferences("StateOfApp", 0) as SharedPreferences
+        val editor = settings.edit()
+        editor.putInt("Score", score)
+        editor.commit()
+
+// Apply the edits!
+
+// Apply the edits!
+        editor.apply()
+
+// Get from the SharedPreferences
+
+// Get from the SharedPreferences
+//
     }
 
 //    private var backToast : Toast? = null

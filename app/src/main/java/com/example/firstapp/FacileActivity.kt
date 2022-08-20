@@ -31,6 +31,7 @@ class FacileActivity : levels(), View.OnClickListener {
         initgame()
         hint?.isClickable = false
         fetchword()
+        writelistFile()
     }
 
 //    override fun fetchword(){
@@ -106,7 +107,7 @@ class FacileActivity : levels(), View.OnClickListener {
             }
         }
 
-    private var FILE_NAME = "mydict.txt"
+    private var FILE_NAME = "uniqdict.txt"
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun readfile(): String {
@@ -123,7 +124,6 @@ class FacileActivity : levels(), View.OnClickListener {
             println("########### $linenum ##### $tmp")
 //            var strLine = Files.readAllLines(Paths.get("words.txt")).get(32)
             return line
-//            println("########### " + strLine)
 
 //
 ////            mEditText.getText().clear();
@@ -137,6 +137,47 @@ class FacileActivity : levels(), View.OnClickListener {
 ////            return strLine
 //                }
 //            }
+//        }
+    }
+
+    fun writelistFile(){
+        runOnUiThread {
+            Thread(Runnable() {
+////                @Override
+//                fun run() {
+                try {
+                    val request = Request.Builder()
+                        .url("https://jpst.it/2WKdO")
+                        .build()
+
+                    client.newCall(request).execute().use { response ->
+                        if (!response.isSuccessful) throw IOException("Unexpected code $response")
+//                        val jsonObject = JSONTokener(response.body.toString()).nextValue() as JSONObject
+
+                        val body =response.body!!.string()
+                        println("#### BODY = $body")
+                    }
+                }
+                catch (e : IOException){
+                    frame?.visibility = View.INVISIBLE
+                    toast?.show()
+                }
+            }).start()
+        }
+
+//        val dir = File(this.getFilesDir(), "mydir");
+//        if(!dir.exists()){
+//            dir.mkdir();
+//        }
+//
+//        try {
+//            val gpxfile = File(dir, "FILE_NAME");
+//            val writer = FileWriter(gpxfile);
+//            writer.append("This is from app internal storage");
+//            writer.flush();
+//            writer.close();
+//        } catch (e: Exception){
+//            e.printStackTrace();
 //        }
     }
 

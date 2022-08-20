@@ -21,6 +21,11 @@ class MediumActivity : levels(), View.OnClickListener {
         url = "https://randomword.com/vocabulary"
         tmpword = findViewById<View>(R.id.tmpword) as? TextView
 
+        val settings = applicationContext.getSharedPreferences("StateOfApp", 0)
+        val homeScore = settings.getInt("Score", 0)
+        mTextCounter?.text = homeScore.toString()
+        println("###### score = $homeScore")
+
         loopButtons()
         initgame()
         fetchword()
