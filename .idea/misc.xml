@@ -9,9 +9,12 @@
         <entry key="app/src/main/res/layout/activity_facile.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/layout/activity_game.xml" value="0.17925720214843754" />
         <entry key="app/src/main/res/layout/activity_hard.xml" value="0.21422101449275363" />
+        <entry key="app/src/main/res/layout/activity_idioms.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22660098522167488" />
         <entry key="app/src/main/res/layout/activity_medium.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/layout/activity_old_code.xml" value="0.10625" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.273358154296875" />
+        <entry key="app/src/main/res/layout/activity_stage.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_tuto.xml" value="0.10625" />
         <entry key="app/src/main/res/layout/popup_window.xml" value="0.21422101449275363" />
         <entry key="app/src/main/res/layout/warning.xml" value="0.115625" />

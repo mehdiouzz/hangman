@@ -29,8 +29,8 @@
 
                 <ImageButton
                     android:id="@+id/setting"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:text="Meaning : "
                     android:textColor="#2F8A33"
                     android:textStyle="bold"
@@ -39,7 +39,7 @@
                     android:layout_marginLeft="20dp"
                     android:scaleType="fitCenter"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/settings"
+                    android:src="@drawable/setting"
                     android:onClick="settings"
                     android:visibility="visible"/>
 
@@ -202,7 +202,27 @@
                     android:text="  Idioms "
                     android:textSize="25dp"
                     android:gravity="center"
-                    android:onClick="onButtonShowPopupWindowClick"/>
+                    android:onClick="idioms"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lvls"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/play" >
+
+                <Button
+                    android:id="@+id/lvlbutt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="  Levels "
+                    android:textSize="25dp"
+                    android:gravity="center"
+                    android:onClick="lvls"/>
             </LinearLayout>
 
 <!--            <LinearLayout-->

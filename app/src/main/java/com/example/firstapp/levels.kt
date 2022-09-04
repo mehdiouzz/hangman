@@ -33,10 +33,10 @@ open class levels : AppCompatActivity(), View.OnClickListener{
     protected var reload: ImageButton? = null
     protected var msg : TextView? = null
 
-    protected var lvl : TextView? = null
+//    protected var lvl : TextView? = null
     protected var popuplocation : LinearLayout? = null
     protected var winMsg = "You won" as String
-    protected var lossMsg = "Game Over" as String
+    protected var lossMsg = "You Lost" as String
     protected var warnViewed = false
     val letters = arrayOf("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
     val dict = mapOf("A" to 1,"B" to 3,"C" to 3,"D" to 2,"E" to 1,"F" to 4,"G" to 2,"H" to 4,"I" to 1,"J" to 7,"K" to 5,"L" to 1,"M" to 3,"N" to 1,"O" to 1,"P" to 3,"Q" to 1,"R" to 1,"S" to 1,"T" to 1,"U" to 1,"V" to 4,"W" to 4,"X" to 8,"Y" to 4,"Z" to 8)
@@ -93,10 +93,12 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         mTextCounter = findViewById<View>(R.id.counter) as? TextView
         img = findViewById<View>(R.id.canvas) as? ImageView
         hint = findViewById<View>(R.id.hint) as? ImageButton
+        hint?.isClickable = false
         reveal = findViewById<View>(R.id.reveal) as? ImageButton
+        reveal?.isClickable = false
         reload = findViewById<View>(R.id.reload) as? ImageButton
 
-        lvl = findViewById<View>(R.id.lvl) as? TextView
+//        lvl = findViewById<View>(R.id.lvl) as? TextView
 //        lvl?.text = this.localClassName
     }
 
@@ -164,7 +166,7 @@ open class levels : AppCompatActivity(), View.OnClickListener{
                 .toList()
             writeLetter(butt.text as String, ArrayList(indexes) )
             score += indexes.size * dict[lett]!!
-            lvl?.text = score.toString()
+//            lvl?.text = score.toString()
             return
         }
         counter--
@@ -218,6 +220,7 @@ open class levels : AppCompatActivity(), View.OnClickListener{
         params = hint?.getLayoutParams()
         params.width = 0
         reveal?.isClickable = false
+//        reveal?.visibility = View.INVISIBLE
         for (itr in letters) {
             val bttns = resources.getIdentifier(itr, "id", packageName)
             findViewById<TextView>(bttns).isClickable = false
@@ -258,9 +261,11 @@ open class levels : AppCompatActivity(), View.OnClickListener{
 
 
         val bonus = popupView?.findViewById<View>(R.id.bonus) as TextView
+        val icon = popupView?.findViewById<View>(R.id.msgicon) as ImageView
         if(outputMsg === lossMsg){
             score = 0
             bonus?.visibility = View.INVISIBLE
+            icon!!.setImageResource(R.drawable.cancel)
         }
         else
         {
@@ -270,8 +275,7 @@ open class levels : AppCompatActivity(), View.OnClickListener{
             }
             else
                 score += 5
-
-            val valueAnimator = ValueAnimator.ofFloat(msg!!.y, msg!!.y-400).apply {
+            val valueAnimator = ValueAnimator.ofFloat(bonus.y, bonus.y-600).apply {
                 interpolator = LinearInterpolator()
                 duration = 1500
             }

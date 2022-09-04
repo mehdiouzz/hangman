@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MediumActivity">
+    tools:context=".IdiomsActivity">
 
     <RelativeLayout
         android:id="@+id/frame"
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textColor="#316B97"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:letterSpacing="0.1"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/manbort"
@@ -449,55 +449,55 @@
 
         </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/guesssection"-->
-<!--            android:layout_width="fill_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/keyboard"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:weightSum="1">-->
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/guesssection"-->
+        <!--            android:layout_width="fill_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/keyboard"-->
+        <!--            android:gravity="center"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:weightSum="1">-->
 
-<!--            <Button-->
-<!--                android:id="@+id/guess"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:onClick="guess"-->
-<!--                android:text="Guess"-->
-<!--                tools:ignore="TouchTargetSizeCheck" />-->
+        <!--            <Button-->
+        <!--                android:id="@+id/guess"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:onClick="guess"-->
+        <!--                android:text="Guess"-->
+        <!--                tools:ignore="TouchTargetSizeCheck" />-->
 
-<!--        </LinearLayout>-->
+        <!--        </LinearLayout>-->
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/footer"-->
-<!--            android:layout_width="fill_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/keyboard"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:visibility="invisible">-->
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/footer"-->
+        <!--            android:layout_width="fill_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/keyboard"-->
+        <!--            android:gravity="center"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:visibility="invisible">-->
 
-            <!--            <Button-->
-            <!--                android:id="@+id/reload"-->
-            <!--                android:layout_width="100dp"-->
-            <!--                android:layout_height="80dp"-->
-            <!--                android:gravity="center"-->
-            <!--                android:text="Reload" />-->
+        <!--            <Button-->
+        <!--                android:id="@+id/reload"-->
+        <!--                android:layout_width="100dp"-->
+        <!--                android:layout_height="80dp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:text="Reload" />-->
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/reload"-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:background="@drawable/my_custom_selector"-->
-<!--                android:gravity="center"-->
-<!--                android:onClick="reload"-->
-<!--                android:scaleType="fitCenter"-->
-<!--                android:src="@drawable/reload" />-->
+        <!--            <ImageButton-->
+        <!--                android:id="@+id/reload"-->
+        <!--                android:layout_width="50dp"-->
+        <!--                android:layout_height="50dp"-->
+        <!--                android:background="@drawable/my_custom_selector"-->
+        <!--                android:gravity="center"-->
+        <!--                android:onClick="reload"-->
+        <!--                android:scaleType="fitCenter"-->
+        <!--                android:src="@drawable/reload" />-->
 
 
 
-<!--        </LinearLayout>-->
+        <!--        </LinearLayout>-->
 
     </RelativeLayout>
 

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/grid">
+
+        <LinearLayout
+            android:id="@+id/soundsection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/sett"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/sound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/stronge"
+                    android:onClick="soundOff"
+                    android:src="@drawable/sound"
+                    android:textColor="#2F8A33"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/soundtxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manbort"
+                    android:gravity="center"
+                    android:text="Sound On"
+                    android:textColor="#000000"
+                    android:textSize="35dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/musicsection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/music"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/stronge"
+                    android:gravity="left"
+                    android:onClick="musicOff"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/music"
+                    android:textColor="#2F8A33"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/musictxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manbort"
+                    android:gravity="center"
+                    android:text="Music On"
+                    android:textColor="#000000"
+                    android:textSize="35dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <!--            <pl.droidsonroids.gif.GifImageView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:src="@drawable/hang"-->
+            <!--                tools:ignore="MissingClass" />-->
+
+
+            <!--            <ImageView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:src="@drawable/hang" />-->
+
+            <!--            <CheckBox-->
+            <!--                android:id="@+id/checkeasy"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:buttonTint="#38CF17"-->
+            <!--                android:gravity="left"-->
+            <!--                android:layout_gravity="center"-->
+            <!--                android:scaleX="2"-->
+            <!--                android:scaleY="2"-->
+            <!--                android:text="" />-->
+
+            <!--            <CheckBox-->
+            <!--                android:id="@+id/checkmediium"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:buttonTint="#DCCC43"-->
+            <!--                android:gravity="center"-->
+            <!--                android:scaleX="2"-->
+            <!--                android:scaleY="2"-->
+            <!--                android:text="" />-->
+
+            <!--            <CheckBox-->
+            <!--                android:id="@+id/checkhrad"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:buttonTint="#E44B40"-->
+            <!--                android:gravity="right"-->
+            <!--                android:scaleX="2"-->
+            <!--                android:scaleY="2"-->
+            <!--                android:text="" />-->
+
+
+            <!--            <com.google.android.material.slider.Slider-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:valueFrom="0"-->
+            <!--                android:valueTo="100"-->
+            <!--                android:stepSize="50" />-->
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

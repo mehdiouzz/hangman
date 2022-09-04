@@ -19,9 +19,9 @@ class HardActivity : levels(), View.OnClickListener {
         url = "https://randomword.com"
 
 //        setButtons()
-        loopButtons()
         initgame()
         fetchword()
+//        loopButtons()
     }
 
     fun fetchword(){
@@ -46,6 +46,9 @@ class HardActivity : levels(), View.OnClickListener {
 
                     mTextViewResult?.text = "-".repeat(randomword!!.length)
                     mTextCounter?.text = randomword?.length.toString().plus(" letters ")
+                    loopButtons()
+                    hint?.isClickable = true
+                    reveal?.isClickable = true
                 }
                 catch (e : IOException){
 

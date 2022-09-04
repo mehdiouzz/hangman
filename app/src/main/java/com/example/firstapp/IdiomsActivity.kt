@@ -10,15 +10,15 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.io.IOException
 
-class MediumActivity : levels(), View.OnClickListener {
+class IdiomsActivity : levels(), View.OnClickListener {
 
     var tmpword : TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_medium)
+        setContentView(R.layout.activity_idioms)
 
-        url = "https://randomword.com/vocabulary"
+        url = "https://randomword.com/idiom"
         tmpword = findViewById<View>(R.id.tmpword) as? TextView
 
         val settings = applicationContext.getSharedPreferences("StateOfApp", 0)
@@ -40,7 +40,8 @@ class MediumActivity : levels(), View.OnClickListener {
                     var word = "--"
                     var doc : Document? = null
                     var elementsHtml : Element
-                    while (!word.matches("^[a-zA-Z]*$".toRegex()) ){
+                    while (!word.matches("^[a-zA-Z]*((_|-|\\s)*[a-zA-Z])*\$".toRegex()) ){
+                        println("Processing word "+word)
                         doc = Jsoup.connect(url.toString()).get() as Document
                         frame?.visibility = View.VISIBLE
                         elementsHtml = doc.getElementById("random_word") as Element
@@ -51,8 +52,21 @@ class MediumActivity : levels(), View.OnClickListener {
                     randomword = word.toString().uppercase()
                     definition = doc?.getElementById("random_word_definition")?.text()
 
+                    var spaceChar = " "
+                    val indexes = Regex(spaceChar).findAll(randomword!!)
+                        .map { it.range.first }
+                        .toList()
+
                     mTextViewResult?.text = "-".repeat(randomword!!.length)
-                    mTextCounter?.text = randomword?.length.toString().plus(" letters ")
+                    writeLetter(spaceChar, ArrayList(indexes) )
+
+                    val spce : Char = ' '
+                    val spaceCount = randomword!!.count { it == spce }
+                    val spcCnt = randomword?.length!! - spaceCount
+                    println(" spcCnt = " + spcCnt)
+                    mTextCounter?.text = (spcCnt).toString().plus(" letters ")
+//                    mTextCounter?.text = (randomword?.length?.minus(spaceCount)).toString().plus(" letters ")
+
                     loopButtons()
                     hint?.isClickable = true
                     reveal?.isClickable = true

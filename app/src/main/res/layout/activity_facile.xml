@@ -85,7 +85,7 @@
                     android:gravity="left"
                     android:scaleType="fitCenter"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/lamp"
+                    android:src="@drawable/lampon"
                     android:clickable="false"
                     android:onClick="displayHint"
                     android:visibility="visible"/>

@@ -1,12 +1,11 @@
 package com.example.firstapp
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -27,10 +26,10 @@ class FacileActivity : levels(), View.OnClickListener {
         mTextDefinition = findViewById<View>(R.id.definition) as? TextView
 
 //        setButtons()
-        loopButtons()
         initgame()
-        hint?.isClickable = false
+//        hint?.isClickable = false
         fetchword()
+//        loopButtons()
         writelistFile()
     }
 
@@ -96,6 +95,9 @@ class FacileActivity : levels(), View.OnClickListener {
                         mTextCounter?.text = randomword?.length.toString().plus(" letters ")
 //                        println(value.getString("word"))
                         definition = fetchdefintion()
+                        loopButtons()
+                        hint?.isClickable = true
+                        reveal?.isClickable = true
 
                     }
                 }
@@ -107,7 +109,7 @@ class FacileActivity : levels(), View.OnClickListener {
             }
         }
 
-    private var FILE_NAME = "uniqdict.txt"
+    private var FILE_NAME = "listword.txt"
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun readfile(): String {
@@ -119,9 +121,8 @@ class FacileActivity : levels(), View.OnClickListener {
             var br = BufferedReader( InputStreamReader(inp));
 //            var strLine = br.readLines().random()
             val linenum = (1..1000).shuffled().last()
-            val tmp = (1..52).random()
+//            val tmp = (1..52).random()
             var line = br.lines().skip((linenum).toLong()).findFirst().get()
-            println("########### $linenum ##### $tmp")
 //            var strLine = Files.readAllLines(Paths.get("words.txt")).get(32)
             return line
 
@@ -232,46 +233,47 @@ class FacileActivity : levels(), View.OnClickListener {
     }
 
     fun displayHint(v : View){
+        v.setClickable(false)
         mTextDefinition!!.text = definition
         mTextDefinition!!.visibility = View.VISIBLE
-//        hint!!.setImageResource(R.drawable.lamp)
-        v.setClickable(false)
+        hint!!.setImageResource(R.drawable.lamp)
     }
 
-
-    override fun checkcounter() {
-        when (this.counter) {
-            0 -> endgame(lossMsg)
-            3 -> {
-//                hint?.visibility = View.VISIBLE
-                hint?.isClickable = true
-                hint!!.setImageResource(R.drawable.lampon)
-            }
-            1 -> {
-                if (warnViewed == false) {
-                    val inflater = getLayoutInflater();
-                    val view = inflater.inflate(R.layout.warning, findViewById(R.id.popup));
-                    val dtoast = Toast(this);
-                    dtoast.setView(view);
-                    dtoast!!.setGravity(Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL, 0, 0)
-                    dtoast.show();
-                    warnViewed = true
-                }
-            }
-        }
-        if (!mTextViewResult!!.text.contains("-") && counter != 0) {
-            endgame(winMsg)
-        }
-    }
+//    override fun checkcounter() {
+//        when (this.counter) {
+//            0 -> endgame(lossMsg)
+////            3 -> {
+//////                hint?.visibility = View.VISIBLE
+////                hint?.isClickable = true
+////                hint!!.setImageResource(R.drawable.lampon)
+////            }
+//            1 -> {
+//                if (warnViewed == false) {
+//                    val inflater = getLayoutInflater();
+//                    val view = inflater.inflate(R.layout.warning, findViewById(R.id.popup));
+//                    val dtoast = Toast(this);
+//                    dtoast.setView(view);
+//                    dtoast!!.setGravity(Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL, 0, 0)
+//                    dtoast.show();
+//                    warnViewed = true
+//                }
+//            }
+//        }
+//        if (!mTextViewResult!!.text.contains("-") && counter != 0) {
+//            endgame(winMsg)
+//        }
+//    }
 
     override fun onClick(view: View) {
 
         val inp = view as Button
 
         checkletter(inp.text as String, inp)
+        inp.setBackgroundColor(Color.GRAY)
 
         checkcounter()
         inp.setClickable(false)
         updateImage()
     }
+
 }
